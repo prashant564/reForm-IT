@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "832655397573",
+    "firebase_url": "https://minorformsapp.firebaseio.com",
+    "project_id": "minorformsapp",
+    "storage_bucket": "minorformsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832655397573:android:8f51080416162a00",
+        "android_client_info": {
+          "package_name": "com.example.minorformsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832655397573-5fgoef820ucd8l9mub6ijnig8ovehnuj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.minorformsapp",
+            "certificate_hash": "7d5462e0a0e25a9cbd5ab895106563ca2a48f3b3"
+          }
+        },
+        {
+          "client_id": "832655397573-er1sp6n02a013kf3a6bu7ot0u7p1tukk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiu0tseBCEg_KC81_1E3BvqzzbeDoyDxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832655397573-er1sp6n02a013kf3a6bu7ot0u7p1tukk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
