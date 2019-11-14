@@ -19,6 +19,9 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 import android.graphics.Bitmap
 import android.util.Log
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionText
@@ -28,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     val PERMISSION_CODE: Int = 1000
     val IMAGE_CAPTURE_CODE: Int = 1001
+    var form_name = ""
     var image_uri: Uri? = null
     var clicked: Boolean = false
     var selectedPhotoUri: Uri? = null
@@ -56,9 +60,9 @@ class MainActivity : AppCompatActivity() {
     private fun sendDataToFirebaseDatabase(){
 
         val uid = FirebaseAuth.getInstance().uid ?:""
-        val ref = FirebaseDatabase.getInstance().getReference("/Forms/RTO/${uid}")
+        val ref = FirebaseDatabase.getInstance().getReference("/Forms/${uid}")
         val forms = Forms(uid,
-            "RTO_FORM 1-A*",
+            "FORM 1-A*",
             "https://firebasestorage.googleapis.com/v0/b/minorformsapp.appspot.com/o/Forms%2FRTO_FORM%201-A*.pdf?alt=media&" +
                 "token=d40ad59b-c5c9-4354-a65e-e41120a175b1",
             "Form 1A (to be filled, signed & stamped by a registered medical practitioner with MBBS or above qualification) must b" +
@@ -182,9 +186,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun processText(text: FirebaseVisionText){
-
         val blocks: List<FirebaseVisionText.TextBlock> = text.textBlocks
-        var txt: String = ""
+        var txt = ""
         if(blocks.isEmpty()){
             Toast.makeText(baseContext,"No text",Toast.LENGTH_SHORT).show()
             return
@@ -192,7 +195,43 @@ class MainActivity : AppCompatActivity() {
         for(block in blocks){
             txt += block.text + "\n"
         }
-        textView_result.text = txt
-        Log.d("Main Activity","${txt}")
+        var index = txt.indexOf("\n")
+        form_name = txt.substring(0, index)
+        textView_result.text = form_name
+        Log.d("Main Activity","$form_name")
+        searchFormInDatabase(form_name)
+
     }
+
+    private fun searchFormInDatabase(name:String){
+        val ref = FirebaseDatabase.getInstance().getReference("/Forms")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                p0.children.forEach {
+                    val forms = it.getValue(Forms::class.java)
+                    if(forms!=null){
+                        if(name == forms.form_name){
+                            Log.d("Main Activity","${forms.form_description}")
+                            val intent = Intent(this@MainActivity, SecondActivity::class.java)
+                            intent.putExtra("name",forms.form_name)
+                            intent.putExtra("description",forms.form_description)
+                            intent.putExtra("url",forms.form_url)
+                            startActivity(intent)
+                        }else{
+                            Toast.makeText(baseContext,"FORM not found",Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    else{
+                        Toast.makeText(baseContext,"No text found in forms, database empty",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+    }
+
 }

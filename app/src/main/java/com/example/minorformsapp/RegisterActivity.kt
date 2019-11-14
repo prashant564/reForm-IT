@@ -116,19 +116,12 @@ class RegisterActivity : AppCompatActivity(){
 
     }
 
-
     private fun saveUserToFirebaseDatabase(){
-
         val uid = FirebaseAuth.getInstance().uid ?:""
         val ref = FirebaseDatabase.getInstance().getReference("/userDetails/$uid")
-
         val userDetails = UserDetails( uid, editText_username.text.toString(),editText_age.text.toString(), editText_father_name.text.toString(),
             editText_aadhar_no.text.toString(), editText_pan_no.text.toString(), editText_address.text.toString(), editText_phone_no.text.toString(),
             editText_email.text.toString(), editText_gender.text.toString(), editText_password.text.toString())
         ref.setValue(userDetails)
-
     }
-
-
-
 }
