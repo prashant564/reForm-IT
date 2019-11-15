@@ -1,5 +1,6 @@
 package com.example.minorformsapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
@@ -14,22 +15,18 @@ class SecondActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
-
         val extras: Bundle? = intent.extras
         val name = extras!!.getString("name")
         val description = extras.getString("description")
         val url = extras.getString("url")
 
         textView_form_name.text = name
-        textView_form_url.text = url
         textView_form_description.text = description
-
         mTextToSpeech = TextToSpeech(applicationContext, TextToSpeech.OnInitListener {
             if(it!=TextToSpeech.ERROR){
                 mTextToSpeech.language = Locale.ENGLISH
             }
         })
-
         button_speak.setOnClickListener {
             val toSpeech = textView_form_description.text.toString()
             if(toSpeech==""){
@@ -45,6 +42,11 @@ class SecondActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(baseContext,"Not Speaking",Toast.LENGTH_SHORT).show()
             }
+        }
+        button_open_pdf.setOnClickListener {
+            val intent = Intent(this, ViewPdfActivity::class.java)
+            intent.putExtra("url",url)
+            startActivity(intent)
         }
     }
 
