@@ -19,6 +19,7 @@ class SecondActivity : AppCompatActivity() {
         val name = extras!!.getString("name")
         val description = extras.getString("description")
         val url = extras.getString("url")
+        val text = extras.getString("text")
 
         textView_form_name.text = name
         textView_form_description.text = description
@@ -44,8 +45,8 @@ class SecondActivity : AppCompatActivity() {
             }
         }
         button_open_pdf.setOnClickListener {
-            val intent = Intent(this, ViewPdfActivity::class.java)
-            intent.putExtra("url",url)
+            val intent = Intent(this, FillFormActivity::class.java)
+            intent.putExtra("text",text)
             startActivity(intent)
         }
     }
