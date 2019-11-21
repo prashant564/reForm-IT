@@ -19,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 import android.graphics.Bitmap
 import android.util.Log
+import com.chaquo.python.Python
+import com.chaquo.python.android.AndroidPlatform
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -75,6 +77,8 @@ class MainActivity : AppCompatActivity() {
         )
         form_list.addAll(form)
         sendDataToFirebaseDatabase()
+
+
         CameraActivity()
         button_gallery.setOnClickListener {
             clicked = true
@@ -119,6 +123,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openCamera() {
+
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the camera")
@@ -126,6 +131,7 @@ class MainActivity : AppCompatActivity() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
+
     }
 
     override fun onRequestPermissionsResult(
@@ -150,6 +156,13 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             bitmap = MediaStore.Images.Media.getBitmap(contentResolver, image_uri)
             captured_imageView.setImageBitmap(bitmap)
+            if (!Python.isStarted()) {
+                Python.start(AndroidPlatform(this))
+            }
+            val python = Python.getInstance()
+            val pythonFile = python.getModule("hello")
+            val helloWorldString = pythonFile.callAttr("helloworld")
+            textView_result.text = helloWorldString.toString()
         }
 
         if (requestCode == 5 && resultCode == Activity.RESULT_OK && data != null) {
