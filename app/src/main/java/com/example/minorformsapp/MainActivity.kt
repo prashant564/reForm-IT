@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionText
+import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -122,7 +123,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openCamera() {
-<<<<<<< HEAD
+
 
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
@@ -132,7 +133,6 @@ class MainActivity : AppCompatActivity() {
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
 
-=======
         this@MainActivity.runOnUiThread(object: Runnable{
             override fun run() {
                 val values = ContentValues()
@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity() {
                 startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
             }
         })
->>>>>>> 3ca94a9b12de681e92f4f2309806601546bc7d68
+
     }
 
     override fun onRequestPermissionsResult(
@@ -166,26 +166,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-<<<<<<< HEAD
+
         if (resultCode == Activity.RESULT_OK) {
             bitmap = MediaStore.Images.Media.getBitmap(contentResolver, image_uri)
             captured_imageView.setImageBitmap(bitmap)
+            val stream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG,90,stream)
+            val image = stream.toByteArray()
             if (!Python.isStarted()) {
                 Python.start(AndroidPlatform(this))
             }
             val python = Python.getInstance()
-            val pythonFile = python.getModule("hello")
-            val helloWorldString = pythonFile.callAttr("helloworld")
+            val pythonFile = python.getModule("checkform")
+            val helloWorldString = pythonFile.callAttr("checkform",image)
             textView_result.text = helloWorldString.toString()
         }
-        =======
+
         this@MainActivity.runOnUiThread(object: Runnable{
             override fun run() {
                 if (requestCode == IMAGE_CAPTURE_CODE && resultCode == Activity.RESULT_OK) {
                     bitmap = MediaStore.Images.Media.getBitmap(contentResolver, image_uri)
                     captured_imageView.setImageBitmap(bitmap)
                 }
->>>>>>> 3ca94a9b12de681e92f4f2309806601546bc7d68
 
                 if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
                     //proceed and check the selected image

@@ -20,12 +20,27 @@ android {
             main {
                 python {
                     srcDirs = ["src/main/python"]
+
                 }
             }
         }
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        python{
+            pip {
+                install "opencv-python"
+                install "pandas"
+                install "pillow"
+                install "numpy"
+                install "matplotlib"
+            }
+        }
+        python {
+            buildPython "usr/bin/python"
+            buildPython "python3.6"
+        }
+
     }
 
     buildTypes {
