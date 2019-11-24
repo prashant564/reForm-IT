@@ -8,8 +8,11 @@
     <color name="hint_color">#999999</color>
     <color name="theme_1">#FFBC45</color>
 
-    <color name="button">#FF0000</color>
-    <color name="background">#F54166</color>
+
+    <color name="button">#0D47A1</color>
+    <color name="background">#E7E7E7</color>
+    <color name="tv_color_grey1">#000000</color>
+    <color name="tv_color_grey6">#F9F9F9</color>
     <color name="navbar">#E06382</color>
     <color name="primary_light_blue">#03256A</color>
     <color name="primary_dark_blue">#0A1B3D</color>

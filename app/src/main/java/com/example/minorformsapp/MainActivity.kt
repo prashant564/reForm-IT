@@ -214,11 +214,11 @@ class MainActivity : AppCompatActivity() {
                     return
                 }
                 for(block in blocks){
-                    txt += block.text + "\n"
+                    txt += block.text + "\n" + "\n"
                 }
                 var index = txt.indexOf("\n")
                 form_name = txt.substring(0, index)
-                textView_result.text = form_name
+//                textView_result.text = form_name
                 Log.d("Main Activity","$form_name")
                 searchFormInDatabase(form_name, txt)
             }
@@ -226,6 +226,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchFormInDatabase(name:String, text:String){
+        clicked = false
         val ref = FirebaseDatabase.getInstance().getReference("/Forms")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
@@ -237,6 +238,7 @@ class MainActivity : AppCompatActivity() {
                             val forms = it.getValue(Forms::class.java)
                             if(forms!=null){
                                 if(name == forms.form_name){
+                                    clicked = true
                                     Log.d("Main Activity","${forms.form_description}")
                                     val intent = Intent(this@MainActivity, SecondActivity::class.java)
                                     intent.putExtra("text",text)
@@ -245,7 +247,11 @@ class MainActivity : AppCompatActivity() {
                                     intent.putExtra("url",forms.form_url)
                                     startActivity(intent)
                                 }else{
-                                    Toast.makeText(baseContext,"FORM not found",Toast.LENGTH_SHORT).show()
+                                    if(!clicked){
+                                        Toast.makeText(baseContext,"FORM not detected",Toast.LENGTH_SHORT).show()
+                                    }else{
+                                        Toast.makeText(baseContext,"FORM successfully detected",Toast.LENGTH_SHORT).show()
+                                    }
                                 }
                             }
                             else{

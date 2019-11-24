@@ -4,16 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_light_blue"
+    android:background="@color/background"
     tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/captured_imageView"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/primary_light_blue"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/hint_color"
         android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,57 +27,57 @@
         android:id="@+id/button_gallery"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_button_camera"
         android:gravity="center"
         android:text="Gallery"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="@+id/captured_imageView"
-        app:layout_constraintHorizontal_bias="0.552"
-        app:layout_constraintStart_toEndOf="@+id/button_click_image"
-        app:layout_constraintTop_toBottomOf="@+id/captured_imageView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_click_image" />
 
     <Button
         android:id="@+id/button_extract_text"
-        android:layout_width="100dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_button_camera"
         android:gravity="center"
         android:text="EXTRACT"
         android:textAlignment="center"
         android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_gallery" />
+        app:layout_constraintTop_toBottomOf="@+id/button_gallery"
+        app:layout_constraintVertical_bias="0.3" />
 
     <Button
         android:id="@+id/button_click_image"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
+        android:layout_marginTop="64dp"
         android:background="@drawable/rounded_button_camera"
         android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
         android:gravity="center"
         android:paddingLeft="40dp"
         android:textAlignment="center"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button_gallery"
-        app:layout_constraintStart_toStartOf="@+id/captured_imageView" />
-
-    <TextView
-        android:id="@+id/textView_result"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        android:textColor="@android:color/white"
-        android:paddingLeft="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_extract_text" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

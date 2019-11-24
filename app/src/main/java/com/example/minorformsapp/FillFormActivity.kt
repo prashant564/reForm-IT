@@ -1,17 +1,22 @@
 package com.example.minorformsapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.provider.DocumentsContract
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.itextpdf.text.Document
+import com.itextpdf.text.Element.ALIGN_CENTER
+import com.itextpdf.text.Font
+import com.itextpdf.text.Font.BOLDITALIC
+import com.itextpdf.text.FontFactory
 import com.itextpdf.text.Paragraph
+import com.itextpdf.text.pdf.BaseFont
 import com.itextpdf.text.pdf.PdfWriter
 import kotlinx.android.synthetic.main.activity_fill_form_pdf.*
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import com.itextpdf.text.Font.BOLD as BOLD
 
 
 class FillFormActivity : AppCompatActivity() {
@@ -37,7 +42,10 @@ class FillFormActivity : AppCompatActivity() {
                     PdfWriter.getInstance(mdoc, FileOutputStream(mfilePath))
                     mdoc.open()
                     val mText = editText_form.text.toString()
-                    mdoc.add(Paragraph(mText))
+                    val paragraph = Paragraph(mText, FontFactory.getFont(FontFactory.TIMES_BOLD))
+                    paragraph.alignment = ALIGN_CENTER
+                    paragraph.firstLineIndent
+                    mdoc.add(paragraph)
                     mdoc.close()
                     Toast.makeText(baseContext, "$mfileName.pdf\nis saved to\n$mfilePath",Toast.LENGTH_SHORT).show()
                 }catch (e: Exception){
@@ -46,4 +54,5 @@ class FillFormActivity : AppCompatActivity() {
             }
         })
     }
+
 }
